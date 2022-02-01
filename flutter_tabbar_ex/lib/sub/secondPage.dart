@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class FirstApp extends StatelessWidget {
+class SecondApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
