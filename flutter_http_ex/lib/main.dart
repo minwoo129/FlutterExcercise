@@ -58,20 +58,34 @@ class _HttpApp extends State<HttpApp> {
           ListView.builder(
             itemBuilder: (context, index) {
               return Card(
-                child: Column(
-                  children: <Widget>[
-                    Text(data[index]['title'].toString()),
-                    Text(data[index]['authors'].toString()),
-                    Text(data[index]['sale_price'].toString()),
-                    Text(data[index]['status'].toString()),
-                    Image.network(
-                      data[index]['thumbnail'],
-                      height: 100,
-                      width: 100,
-                      fit: BoxFit.contain
-                    )
-                  ],
-                ),
+                child: Container(
+                  child: Row(
+                    children: <Widget>[
+                      Image.network(
+                          data[index]['thumbnail'],
+                          height: 100,
+                          width: 100,
+                          fit: BoxFit.contain
+                      ),
+                      Column(
+                        children: <Widget>[
+                          Container(
+                            width: MediaQuery.of(context).size.width - 150,
+                            child: Text(
+                              data[index]['title'].toString(),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          Text(data[index]['authors'].toString()),
+                          Text(data[index]['sale_price'].toString()),
+                          Text(data[index]['status'].toString()),
+                        ],
+                      ),
+                    ],
+                    mainAxisAlignment: MainAxisAlignment.center,
+                  ),
+
+                )
               );
             }, itemCount: data.length,
           ),
