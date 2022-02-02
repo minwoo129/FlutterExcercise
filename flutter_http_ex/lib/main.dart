@@ -35,6 +35,14 @@ class HttpApp extends StatefulWidget {
 
 class _HttpApp extends State<HttpApp> {
   String result = '';
+  late List data;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    data = new List.empty(growable: true);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +51,30 @@ class _HttpApp extends State<HttpApp> {
       ),
       body: Container(
         child: Center(
-          child: Text('$result'),
+          child: data.length == 0 ?
+            Text('데이터가 없습니다.',
+            style: TextStyle(fontSize: 20),
+            textAlign: TextAlign.center) :
+          ListView.builder(
+            itemBuilder: (context, index) {
+              return Card(
+                child: Column(
+                  children: <Widget>[
+                    Text(data[index]['title'].toString()),
+                    Text(data[index]['authors'].toString()),
+                    Text(data[index]['sale_price'].toString()),
+                    Text(data[index]['status'].toString()),
+                    Image.network(
+                      data[index]['thumbnail'],
+                      height: 100,
+                      width: 100,
+                      fit: BoxFit.contain
+                    )
+                  ],
+                ),
+              );
+            }, itemCount: data.length,
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -60,7 +91,12 @@ class _HttpApp extends State<HttpApp> {
     var response = await http.get(Uri.parse(url),
       headers: {"Authorization" : "KakaoAK 2555e6f9c3662df60f68f0aa9d75597d"}
     );
-    print(response.body);
-    return "success";
+    //print(response.body);
+    setState(() {
+      var dataConvertedToJSON = json.decode(response.body);
+      List result = dataConvertedToJSON['documents'];
+      data.addAll(result);
+    });
+    return response.body;
   }
 }
