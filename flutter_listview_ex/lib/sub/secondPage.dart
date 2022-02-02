@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import '../animalItem.dart';
 
 class SecondApp extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => _SecondApp();
   List<Animal>? list;
   SecondApp({Key? key, @required this.list}) : super(key: key);
+  @override
+  State<StatefulWidget> createState() => _SecondApp();
+
 }
 
 class _SecondApp extends State<SecondApp> {
@@ -97,7 +98,31 @@ class _SecondApp extends State<SecondApp> {
               ElevatedButton(
                 child: Text('동물 추가하기'),
                 onPressed: () {
-
+                  var animal = Animal(animalName: nameController.value.text, kind: getKind(_radioValue), imagePath: _imagePath, flyExist: flyExist);
+                  AlertDialog dialog = AlertDialog(
+                    title: Text('동물 추가하기'),
+                    content: Text(
+                      '이 동물운 ${animal.animalName} 입니다.'
+                          '또 동물의 종류는 ${animal.kind}입니다 \n이 동물을 추가하시겠습니까?',
+                      style: TextStyle(fontSize: 30.0),
+                    ),
+                    actions: [
+                      ElevatedButton(
+                        onPressed: () {
+                          widget.list?.add(animal);
+                          Navigator.of(context).pop();
+                        },
+                        child: Text('예'),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text('아니요.'),
+                      )
+                    ],
+                  );
+                  showDialog(context: context, builder: (BuildContext context) => dialog);
                 },
               )
             ],
@@ -110,6 +135,17 @@ class _SecondApp extends State<SecondApp> {
     setState(() {
       _radioValue = value;
     });
+  }
+
+  getKind(int? radioValue) {
+    switch(radioValue) {
+      case 0:
+        return "양서류";
+      case 1:
+        return '파충류';
+      case 2:
+        return '포유류';
+    }
   }
 
 }
