@@ -64,6 +64,14 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
         ],
         controller: controller,
       ),
+      bottomNavigationBar: TabBar(
+        tabs: <Tab>[
+          Tab(icon: Icon(Icons.looks_one, color: Colors.blue),) ,
+          Tab(icon: Icon(Icons.looks_two, color: Colors.blue),)
+        ],
+        controller: controller,
+      ),
+
     );
   }
 
