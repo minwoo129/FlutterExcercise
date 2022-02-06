@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_list/SecondDetail.dart';
 import 'package:todo_list/SubDetail.dart';
+import 'package:todo_list/ThirdPage.dart';
 
 void main() {
   runApp(MyApp());
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => SubDetail(),
         '/second': (context) => SecondDetail(),
+        '/third': (context) => ThirdDetail(),
       },
     );
   }

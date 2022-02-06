@@ -16,7 +16,7 @@ class _SubDetail extends State<SubDetail> {
         child: Center(
           child: ElevatedButton(
             onPressed: () {
-              Navigator.of(context).pushReplacementNamed('/second');
+              Navigator.of(context).pushNamed('/second');
             },
             child: Text('두 번째 페이지로 이동하기')
           )
