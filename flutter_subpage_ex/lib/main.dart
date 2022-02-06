@@ -14,7 +14,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: FirstPage()
+      initialRoute: '/',
+      routes: {
+        '/': (context) => FirstPage(),
+        '/second': (context) => SecondPage();
+        },
     );
   }
 }
@@ -38,7 +42,7 @@ class _FirstPage extends State<FirstPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => SecondPage()));
+          Navigator.of(context).pushNamed('/second');
         },
         child: Icon(Icons.add),
       )
