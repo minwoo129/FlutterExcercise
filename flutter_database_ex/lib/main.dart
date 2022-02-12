@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'add_todo.dart';
+import 'todo.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,12 +13,18 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    Future<Database> database = initDatabase();
+
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: DatabaseApp()
+      initialRoute: '/',
+      routes: {
+        '/': (context) => DatabaseApp(database),
+        '/add': (context) => AddTodoApp(database),
+      },
     );
   }
 
@@ -36,6 +44,9 @@ class MyApp extends StatelessWidget {
 }
 
 class DatabaseApp extends StatefulWidget {
+  final Future<Database> db;
+  DatabaseApp(this.db);
+  
   @override
   State<StatefulWidget> createState() => _DatabaseApp();
 }
@@ -56,5 +67,10 @@ class _DatabaseApp extends State<DatabaseApp> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
+  }
+
+  void _insertTodo(Todo todo) async {
+    final Database database = await widget.db;
+    await database.insert('todos', todo.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
   }
 }
