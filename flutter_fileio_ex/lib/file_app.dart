@@ -18,6 +18,7 @@ class _FileApp extends State<FileApp> {
     // TODO: implement initState
     super.initState();
     readCountFile();
+    initData();
   }
 
   void initData() async {
