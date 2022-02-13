@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity
       ),
       initialRoute: '/',
       routes: {
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
       onCreate: (db, version) {
         return db.execute(
           "CREATE TABLE todos (id INTEGER PRIMARY KEY AUTOINCREMENT, "
-          "title TEXT, content TEXT, active INTEGER"
+          "title TEXT, content TEXT, active INTEGER)"
         );
       },
       version: 1
@@ -100,7 +101,6 @@ class _DatabaseApp extends State<DatabaseApp> {
                     return Text('No data');
                   }
               }
-              return CircularProgressIndicator();
             },
             future: todoList
           ),
@@ -109,6 +109,7 @@ class _DatabaseApp extends State<DatabaseApp> {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           final todo = await Navigator.of(context).pushNamed('/add');
+          if(todo != null) _insertTodo(todo as Todo);
         },
         child: Icon(Icons.add),
       ),
