@@ -3,6 +3,7 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'add_todo.dart';
 import 'todo.dart';
+import 'clear_list.dart';
 
 void main() {
   runApp(MyApp());
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => DatabaseApp(database),
         '/add': (context) => AddTodoApp(database),
+        '/clear': (context) => ClearListApp(database),
       },
     );
   }
@@ -66,7 +68,21 @@ class _DatabaseApp extends State<DatabaseApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Database Example')
+        title: Text('Database Example'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () async {
+              await Navigator.of(context).pushNamed('/clear');
+              setState(() {
+                todoList = getTodos();
+              });
+            }, 
+            child: Text(
+              '완료한 일',
+              style: TextStyle(color: Colors.white),
+              )
+            ),
+        ],
       ),
       body: Container(
         child: Center(
@@ -150,7 +166,7 @@ class _DatabaseApp extends State<DatabaseApp> {
                                     ),
                                     TextButton(
                                       onPressed: () {
-                                        Navigator.of(context).pop(todo);
+                                        Navigator.of(context).pop();
                                       }, 
                                       child: Text('아니요')
                                     )
