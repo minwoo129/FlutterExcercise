@@ -27,6 +27,7 @@ class AnimationApp extends StatefulWidget {
 
 class _AnimationApp extends State<AnimationApp> {
   List<People> peoples = new List.empty(growable: true);
+  Color weightColor = Colors.blue;
   int current = 0;
 
   @override
@@ -38,6 +39,13 @@ class _AnimationApp extends State<AnimationApp> {
     peoples.add(People('콘', 194, 140));
     peoples.add(People('디디', 100, 80));
     super.initState();
+  }
+
+  void _changeWeightColor(double weight) {
+    if(weight < 40) weightColor = Colors.blueAccent;
+    else if(weight < 60) weightColor = Colors.indigo;
+    else if(weight < 80) weightColor = Colors.orange;
+    else weightColor = Colors.red;
   }
 
   @override
@@ -68,7 +76,7 @@ class _AnimationApp extends State<AnimationApp> {
                     AnimatedContainer(
                       duration: Duration(seconds: 2),
                       curve: Curves.easeInCirc,
-                      color: Colors.blue,
+                      color: weightColor,
                       child: Text(
                         '몸무게 ${peoples[current].weight}',
                         textAlign: TextAlign.center,
@@ -97,6 +105,7 @@ class _AnimationApp extends State<AnimationApp> {
                 onPressed: () {
                   setState(() {
                     if(current < peoples.length-1) current++;
+                    _changeWeightColor(peoples[current].weight);
                   });
                 },
                 child: Text('다음'),
@@ -105,6 +114,7 @@ class _AnimationApp extends State<AnimationApp> {
                 onPressed: () {
                   setState(() {
                     if(current > 0) current--;
+                    _changeWeightColor(peoples[current].weight);
                   });
                 },
                 child: Text('이전'),
