@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'people.dart';
+import 'second_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -131,6 +132,20 @@ class _AnimationApp extends State<AnimationApp> {
                   });
                 },
                 child: Text('사라지기'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => SecondPage()));
+                },
+                child: SizedBox(
+                  width: 200,
+                  child: Row(
+                    children: <Widget>[
+                      Hero(tag: 'detail', child: Icon(Icons.cake)),
+                      Text('이동하기')
+                    ],
+                  ),
+                ),
               ),
             ],
             mainAxisAlignment: MainAxisAlignment.center,
