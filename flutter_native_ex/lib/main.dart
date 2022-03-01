@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue
         ),
-        home: SendDataExample(),
+        home: NativeApp(),
       );
     }
   }
@@ -43,6 +43,8 @@ class NativeApp extends StatefulWidget {
 
 class _NativeApp extends State<NativeApp> {
   static const platform = const MethodChannel('com.flutter.dev/info');
+  static const platform3 = const MethodChannel('com.flutter.dev/dialog');
+
   String _deviceInfo = 'UnKnown Info';
 
   @override
@@ -53,9 +55,19 @@ class _NativeApp extends State<NativeApp> {
       ),
       body: Container(
         child: Center(
-          child: Text(
-            _deviceInfo,
-            style: TextStyle(fontSize: 30),
+          child: Column(
+            children: <Widget>[
+              Text(
+                _deviceInfo,
+                style: TextStyle(fontSize: 30),
+              ),
+              TextButton(
+                onPressed: () {
+                  _showDialog();
+                },
+                child: Text('네이티브 창 열기')
+              ),
+            ],
           ),
         ),
       ),
@@ -80,5 +92,12 @@ class _NativeApp extends State<NativeApp> {
     setState(() {
       _deviceInfo = deviceInfo;
     });
+  }
+
+  Future<void> _showDialog() async {
+    try {
+      await platform3.invokeMethod('showDialog');
+    }
+    on PlatformException catch(e) { }
   }
 }
