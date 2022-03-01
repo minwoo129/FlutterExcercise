@@ -11,6 +11,7 @@ class _SendDataExample extends State<SendDataExample> {
 
   TextEditingController controller = new TextEditingController();
   String _changeText = 'Nothing';
+  String _reChangedText = 'Nothing';
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +34,22 @@ class _SendDataExample extends State<SendDataExample> {
                 _changeText,
                 style: TextStyle(fontSize: 20)
               ),
+              SizedBox(
+                height: 20
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  _decodeText(_changeText);
+                },
+                child: Text('디코딩')
+              ),
+              SizedBox(
+                height: 20
+              ),
+              Text(
+                _reChangedText,
+                style: TextStyle(fontSize: 20),
+              )
             ],
             mainAxisAlignment: MainAxisAlignment.center,
           ),
@@ -52,6 +69,14 @@ class _SendDataExample extends State<SendDataExample> {
     print(result);
     setState(() {
       _changeText = result;
+    });
+  }
+
+  void _decodeText(String changeText) async {
+    final String result = await platform.invokeMethod('getDecode', changeText);
+    print(result);
+    setState(() {
+      _reChangedText = result;
     });
   }
 }
