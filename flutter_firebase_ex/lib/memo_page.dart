@@ -19,13 +19,15 @@ class _MemoPage extends State<MemoPage> {
     super.initState();
     _database = FirebaseDatabase(databaseURL: _databaseUrl);
     reference = _database!.reference().child('memo');
-
     reference!.onChildAdded.listen((event) {
+      print('================= connected ====================');
       print(event.snapshot.value.toString());
       setState(() {
         memos.add(Memo.fromSnapshot(event.snapshot));
       });
     });
+
+    
   }
 
   @override
